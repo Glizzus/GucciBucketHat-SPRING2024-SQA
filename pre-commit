@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Call bandit on the entire codebase
+bandit -r ./MLForensics-farzana -f csv -o bandit_results.csv || exit 0
