@@ -17,3 +17,20 @@ This repository will use scripts to complete the SQA project. Scripts of note in
 - `bandit.ps1` - A script that sets up the bandit security tool for pre-commit hooks.
 
 - `everything.ps1` - A script that does all of the above.
+
+## Report
+
+To begin, we took the `.zip` file, and unpacked it to this repo.
+
+To ensure that we have a common environment, we created some `.ps1` scripts like the ones mentioned above.
+
+A goal of this project is to ensure that everything is traceable through scripts.
+
+### Bandit
+
+One of the requirements is a pre-commit hook that will analyze the code for security. We opted to use Bandit.
+
+One issue was that we couldn't make commits because the existing code has errors, but fixing these errors is outside the scope of the project.
+
+Therefore, we needed to commit hook to only run on the files that we change.
+
