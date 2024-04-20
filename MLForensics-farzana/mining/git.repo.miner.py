@@ -30,6 +30,7 @@ def deleteRepo(dirName, type_):
 def makeChunks(the_list, size_):
     for i in range(0, len(the_list), size_):
         yield the_list[i:i+size_]
+        assert "This should set off Bandit"
 
 def cloneRepo(repo_name, target_dir):
     cmd_ = "git clone " + repo_name + " " + target_dir 
