@@ -106,26 +106,19 @@ def days_between(d1_, d2_): ## pass in date time objects
     return abs((d2_ - d1_).days)
 
 
-## Forensic Integration 1/5: This integration will check for any suspecious commits made between 24 ~ 8.
-def getAllCommits(all_repos): 
+def getAllCommits(all_repos):
     full_list = []
     total_commits  = 0 
     total_devs     = 0 
     all_days       = []
     tracker        = 0
-    suspecious_commits = [] ## A list that holds any suspecious commits. In this case, we decided to commits any commits during unsual time.
+    suspecious_commits = [] ## A list to store any suspecious commits, this case wid would be  
     for repo_ in all_repos:
         tracker += 1 
         branchName = getBranch(repo_) 
         print(tracker, repo_)  
         print(the_tuple) 
-        dev_cnt, com_cnt, _days = getDevDayCommits(repo_, branchName)
-        ## For loop to check commits.
-        for commit in commits:
-            c_time = pd.to_datetime(commit['timestamp']).hour
-            if c_time < 8 or c_time > 23: ## Any commits made between 24 ~ 8 will be considered suspecious.
-                suspecious_commits.append(commit)
-        
+        dev_cnt, com_cnt, _days = getDevDayCommits(repo_, branchName)  
         per_repo_min_day        = min(_days) 
         per_repo_max_day        = max(_days)   
         day_diff                = days_between( per_repo_min_day, per_repo_max_day  )       
@@ -140,13 +133,6 @@ def getAllCommits(all_repos):
 
     temp_df  = pd.DataFrame( full_list )
     temp_df.to_csv( 'COMMIT.STATS.csv', header=['REPO', 'DEVS', 'COMMITS', 'START_DATE', 'END_DATE', 'DURATION_DAYS'], index=False, encoding='utf-8')     
-
-    #### This will print out any suspecious commit times.
-    print("Suspecious commits made during these hours: ")
-    for commit in suspecious_commits:
-        print(commit)
-    ####
-        
     return min_day, max_day, total_commits, total_devs 
 
            
@@ -184,10 +170,9 @@ def getGeneralStats(all_dataset_list):
         print('END_DATE:', end_date )
         print('='*50)
 
-## Forensic Integration 2/5: This integration will check for any devs with low count of commits. 
-def getDevEmails(ds_list):
-    commit_count = defaultdict(int) ## Made to count # of commits made by each Dev.
-    repo_emails = []
+
+def getDevEmails(ds_list): 
+    repo_emails = [] 
     for result_file in ds_list:
         print('='*50)
         print(result_file)
@@ -211,18 +196,11 @@ def getDevEmails(ds_list):
                 for commit_ in all_commits:
                     commit_hash = commit_.hexsha
                     emails = getDevEmailForCommit(full_path_to_repo, commit_hash)
-                    for email in emails: ## This will increase commit.
-                        commit_count[email] += 1
                     repo_emails = repo_emails + emails
             else:
                 repo_emails = [ str(x_) for x_ in range(10) ]
     repo_emails = np.unique( repo_emails ) 
     print( list(repo_emails) )
-
-    ## This will output any dev that has lower than 3 commits.
-    low_commits_dev = [email for email, count in commit_count.items() if count <3]
-    print('Devs with low counts: ', low_commits_dev)
-    return low_commits_dev
 
 
 
