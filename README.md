@@ -34,8 +34,6 @@ One issue was that we couldn't make commits because the existing code has errors
 
 Therefore, we needed to commit hook to only run on the files that we change.
 
-
-
 ### Codacy
 
 We integrated Codacy into the project to ensure that the code is up to standard.
@@ -43,3 +41,7 @@ We integrated Codacy into the project to ensure that the code is up to standard.
 Doing this allows us to perform continuous integration - passing code is automatically merged into the main branch.
 
 This keeps code quality high and ensures that the code is always in a working state, increasing the reliability of the project.
+
+Integration Codacy found 5000 security issues, which means that we can increase the security of the project.
+
+![codacy errors](./images/security-errors.png)
