@@ -11,7 +11,8 @@ import os
 from datetime import datetime
 import subprocess
 from collections import Counter 
-import shutil 
+import shutil
+import logging ## Need it for logging.
 
 def getBranch(path):
     dict_ = { 
@@ -102,7 +103,13 @@ def getDevDayCommits(full_path_to_repo, branchName='master', explore=1000):
     repo_emails = np.unique( repo_emails ) 
     return len(repo_emails) , len(all_commits) , all_day_list
 
-def days_between(d1_, d2_): ## pass in date time objects 
+
+
+## Forensic Integration 4/5: Confirms both inputs are datetime objects. 
+def days_between(d1_, d2_): ## pass in date time objects
+
+    if not isinstance(d1_, datetime) or not isinstance(d2_, datetime):
+        raise TypeError("Inputs must be datetime objects.")
     return abs((d2_ - d1_).days)
 
 
@@ -150,10 +157,11 @@ def getAllCommits(all_repos):
     return min_day, max_day, total_commits, total_devs 
 
            
-
+## Forensic Integration 5/5: Verifies all files exist.
 def getAllFileCount(df_):
     tot_fil_size = 0 
     file_names_ =  np.unique( df_['FILE_FULL_PATH'].tolist() )
+    valid_files = [file_ for file_ in file_names_ if os.path.exists(file_)] ##Verifies the existence of each file.
     for file_ in file_names_:
         tot_fil_size = tot_fil_size + getFileLength( file_ )
     return tot_fil_size, len( file_names_ ) 

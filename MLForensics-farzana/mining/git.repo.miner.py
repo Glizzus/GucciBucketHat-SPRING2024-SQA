@@ -31,7 +31,13 @@ def makeChunks(the_list, size_):
     for i in range(0, len(the_list), size_):
         yield the_list[i:i+size_]
 
+## Forensic Integration 3/5: Checks ensure the repo stats with https://github.com
 def cloneRepo(repo_name, target_dir):
+    ## These lines specifically require clone to start with https://github.com, which adds a security measure to protect cloning from the other sources.
+    if not repo_name.startswith('https://github.com'):
+        print(f"Alert: The repository URL '{repo_name}' is invalid.")
+        return
+    
     cmd_ = "git clone " + repo_name + " " + target_dir 
     try:
        subprocess.check_output(['bash','-c', cmd_])    
