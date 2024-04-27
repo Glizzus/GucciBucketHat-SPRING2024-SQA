@@ -26,6 +26,26 @@ One bug that we found is that the `Average` method incorrectly divides by zero w
 
 ![fuzzing](./images/fuzz-errors.png)
 
+### Forensic
+
+We integrated forensics to 5 different methods: getAllcommits, getDevEmails, days_between, getAllFileCount, and cloneRepo.
+
+getAllcommits: The change made to this function will check for any suspecious commits made between hours 24 ~ 8. 
+
+Implemented new list that holds all the suspecious commits and a for loop that tracks all commits made and add anything that is made between 24 ~ 8.
+
+getDevEmails: The change made to this function will report any devs with low count of commits.
+
+Specifically set to lower than 3.
+
+cloneRepo: The change will check ensure the repo starts with https://github.com. 
+
+This will avoid any other repo to be cloned.
+
+dat_between: The change will confirm both inputs are in datetime object.
+
+getAllFileCount: This will simply verify all files exist.
+
 ### Codacy
 
 We integrated Codacy into the project to ensure that the code is up to standard.
